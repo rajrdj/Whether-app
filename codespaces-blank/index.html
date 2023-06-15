@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>weather app</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+        .container{
+            width: 100%;
+            height:100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: honeydew;
+        }
+
+        .main-body{
+            width: 300px;
+            height: 450px;
+            position: relative;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 5px 5px 3px 0px grey;
+            background-color: rgb(7, 139, 247);
+            overflow: hidden;
+        }
+        .icon{
+            width: 100%;
+            height: 50%;
+            font-size: 3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: resize infinite 4s linear;
+        }
+        @keyframes resize {
+            from{
+                transform: scale(1.1);
+            }
+            to{
+                transform: scale(1.5);
+            }
+            
+        }
+        .info{
+            width: 100%;
+            height: 50%;
+          text-align: center;
+          font-weight: 300;
+          z-index: 4;
+           
+        }
+        .wave{
+            width: 450px;
+            height: 380px;
+            border-radius: 50%;
+            position: absolute;
+            background-color: honeydew;
+            opacity: 0.2;
+            animation: waves infinite linear 6s;
+            box-shadow: 3px 3px 10px 6px white;
+            z-index: 1;
+           
+        }
+        @keyframes waves {
+            from{
+                transform: rotate(0deg);
+            }
+            to{
+                transform: rotate(360deg);
+            }
+            
+        }
+        .one{
+            top : 200px;
+            left : -30px;
+            animation-delay: 1s;
+        }
+        .two{
+            top: 195px;
+            left: -80px;
+            animation-delay: 2s;
+        
+        }
+        .three{
+            top: 190px;
+            left: -50px;
+        }
+
+        .info  h2{
+            padding-top: 20px;
+            padding-bottom: 4px;
+        }
+        .info p{
+            font-size: 15px;
+        }
+      
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-body">
+        <div class="wave one"></div>
+        <div class="wave two"></div>
+        <div class="wave three"></div>
+        <div class="icon" id="seticon">
+        </div>
+        <div class="info" style="z-index: 2;">
+           <h2>{%city%} , {%country%}</h2>
+            <p id="dmdt" ></p>
+            <h2>Temperature : {%temp%}&deg;C</h2>
+            <p >Max : {%max%}&deg;C | Min : {%min%}&deg;C</p>
+        </div>
+
+    </div>
+        
+    </div>
+    
+    <script>
+        let temStatus = "{%Status%}";
+        let weathericon = document.getElementById("seticon");
+    
+        if(temStatus == "Sunny")
+           weathericon.innerHTML="<i class='far fa-sun' style = 'color:#eccc68;'></i>";
+            else if(temStatus == "Clouds")
+            weathericon.innerHTML="<i class='fas fa-cloud' style = 'color:#eee;'></i>";
+            else if(temStatus == "Rain")
+            weathericon.innerHTML="<i class='fas fa-cloud-rain'  style = 'color:#fff;'></i>";
+            else if(temStatus == "Mist")
+            weathericon.innerHTML="<i class='fas fa-smog'  style = 'color:#fff;'></i>";
+            else
+            weathericon.innerHTML="<i class='fas fa-snowflake'  style = 'color:#fff;'></i>";
+
+        const fun = () => {
+            var days = ["Sunday","Monday","Tuesday","Wednesday",
+            "Thursday","Friday","Saturday"];
+
+            var month = ["Jan","Feb","March","April","May","June","july","Aug","Sept","Oct","Nov","Dec"];
+
+            let dt = new Date();
+            let hrs = dt.getHours();
+            let min = dt.getMinutes();
+            let mnth =  month[dt.getMonth()];
+            let date = dt.getDate();
+            let day = days[dt.getDay()];
+            let tym = "AM";
+           
+            if(hrs>=12)
+            {
+                tym = "PM";
+                hrs-=12;
+            }
+            if(min<10)
+            {
+                min = "0"+min;
+            }
+            console.log(temStatus);
+           
+            document.getElementById("dmdt").innerHTML = `${date} ${mnth} | ${day} | ${hrs}:${min} ${tym}`;
+
+        }
+        setInterval(fun,1000);
+
+    </script>
+    
+</body>
+</html>
